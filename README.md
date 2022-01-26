@@ -9,13 +9,7 @@ You can learn more about [Secrets Automation and 1Password Connect](https://1pas
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Module & Environment Variables](#module-variables)
-* [`generic_item` Module](#connectgeneric_item-module)
-* [`item_info` Module](#item_info-module)
-* [`field_info` Module](#field_info-module)
-* [Testing](#testing)
 * [About 1Password](#about-1password)
-* [Security](#security)
-
 
 ### Requirements
 - Python >= 3.6.0
@@ -41,15 +35,15 @@ The plugin support the following variable definitions. You may either explicitly
 
 Environment variables are ignored if the module variable is defined for a task.
 
-| Plugin Variable | Environment Variable | Description                                                                             |
-|----------------:|----------------------|-----------------------------------------------------------------------------------------|
-|        `op_connect_host` | `OP_CONNECT_HOST`           | URL of a 1Password Connect API Server                                   |
-|       `op_connect_token` | `OP_CONNECT_TOKEN`          | JWT used to authenticate 1Password Connect API requests                 |
-|   `op_connect_ca_bundle` | `OP_CONNECT_SKIP_VERIFY `   | (Optional) name of a 1Password Vault the API token is allowed to access |
-| `op_connect_skip_verify` | `OP_CONNECT_SKIP_VERIFY `   | (Optional) name of a 1Password Vault the API token is allowed to access |
+| Plugin Variable | Environment Variable | Description                                                                           |
+|----------------:|----------------------|---------------------------------------------------------------------------------------|
+|        `op_connect_host` | `OP_CONNECT_HOST`         | URL of a 1Password Connect API Server                                   |
+|       `op_connect_token` | `OP_CONNECT_TOKEN`        | JWT used to authenticate 1Password Connect API requests                 |
+|   `op_connect_ca_bundle` | `OP_CONNECT_CA_BUNDLE`    | (Optional) Use CA bundle file for self-signed server certificate        |
+| `op_connect_skip_verify` | `OP_CONNECT_SKIP_VERIFY ` | (Optional) Skip certificate verification                                |
 
 
-## `opconnect.generic_item` plugin
+## `joltcan.opconnect` plugin
 
 
 ### Example Usage
