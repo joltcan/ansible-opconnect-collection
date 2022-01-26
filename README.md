@@ -64,16 +64,19 @@ Environment variables are ignored if the module variable is defined for a task.
 
 ```
 <details>
-<summary>View output registered to the `op_item` variable</summary>
+<summary>View output registered to the `opconnect`</summary>
 <br>
 
 ```
 op: [localhost] => {
-    msg: "var is thepassword"
+    msg: "var is apikey"
 }
+op: [localhost] => {
+    msg: "somepassword"
+}
+
 ```
 </details>
-
 
 **Update an Item**
 
