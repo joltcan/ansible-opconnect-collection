@@ -8,6 +8,8 @@ WORKTREE_CLEAN := $(shell git status --porcelain 1>/dev/null 2>&1; echo $$?)
 SCRIPTS_DIR := $(CURDIR)/scripts
 
 curVersion := $$(sed -n -E 's/^version: "([0-9]+\.[0-9]+\.[0-9]+)"$$/\1/p' galaxy.yml)
+namespace := $$(sed -n -E 's/^namespace: (.+)/\1/p' galaxy.yml)
+name := $$(sed -n -E 's/^name: (.+)/\1/p' galaxy.yml)
 
 test/unit:	## Run unit tests in a Docker container
 	$(SCRIPTS_DIR)/run-tests.sh units
@@ -20,6 +22,9 @@ test/sanity:	## Run ansible sanity tests in a Docker container
 
 build: clean	## Build collection artifact
 	ansible-galaxy collection build --output-path dist/
+
+publish:
+	@ansible-galaxy collection publish dist/$(namespace)-$(name)-$(curVersion).tar.gz
 
 clean:	## Removes dist/ directory
 	@rm -rf ./dist
