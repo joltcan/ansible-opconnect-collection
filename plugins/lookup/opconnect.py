@@ -184,7 +184,6 @@ class LookupModule(LookupBase):
 
         # iterate and find the item uuid
         itemvalue = False
-        sectionid = False
 
         for item in data['fields']:
             if section is not None and "section" in item:
