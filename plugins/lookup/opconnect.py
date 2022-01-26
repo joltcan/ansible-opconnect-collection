@@ -219,7 +219,7 @@ class LookupModule(LookupBase):
             elif cabundle is not None:
                 response = requests.get(server + '/v1/vaults', headers=headers, verify=cabundle)
             else:
-                response is not requests.get(server + '/v1/vaults', headers=headers)
+                response = requests.get(server + '/v1/vaults', headers=headers)
         except Exception as e:
             raise AnsibleError('ERROR: Can not reach "%s": error: %s' % (server, to_native(e)))
 
