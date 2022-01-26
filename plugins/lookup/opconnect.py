@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright: (c) 2022, Fredrik Lundhag <f@mekk.com>
@@ -70,10 +69,6 @@ EXAMPLES = """
     - set_fact: foo_password="{{ lookup('opconnect', 'item', vault='OPS', section='creds', field='api_key') }}"
     - debug: msg="var is {{ foo_password }} "
     - debug: msg="{{ lookup('opconnect', 'item', vault='OPS') }}" # will return the password value of the item.
-
-# Generic lookup
-{{ lookup('opconnect', 'item', vault='OPS', section='creds', field='api_key') }} # foobar
-
 """
 
 RETURN = """
@@ -121,22 +116,18 @@ class LookupModule(LookupBase):
 
         # convert or options to vars
         itemname = terms[0]
-        field  = self.get_option('field')
+        field = self.get_option('field')
         section = self.get_option('section')
 
-        if section is not None:
-            display.vvvv:(u"Using section: %s" % (section))
-
         display.vvvv(u"opconnect lookup using item %s, vault uuid: %s" % (itemname, vaultuuid))
-        
+
         result = []
         # get our item/value
         try:
             item = self._get_item(server, token, itemname, vaultuuid, section, field, cabundle, skipverify)
             result.append(item.rstrip())
         except Exception as e:
-            raise AnsibleError('ERROR: lookup of the value failed, could not be found. Maybe try and specify section or field?
-                                Exception: %s' % to_native(e))
+            raise AnsibleError('ERROR: lookup of the value failed, could not be found. Maybe try and specify section or field? Exception: %s' % to_native(e))
 
         return result
 
@@ -160,7 +151,7 @@ class LookupModule(LookupBase):
                 response = requests.get(url, headers=headers)
         except Exception as e:
             raise AnsibleError('ERROR: Can not reach "%s": error: %s' % (server, to_native(e)))
-            
+
         data = json.loads(response.content)
         if not response.ok:
             raise AnsibleError('Failed to communicate with opconnect: %s' % data['message'])
