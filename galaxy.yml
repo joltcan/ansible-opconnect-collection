@@ -2,7 +2,7 @@ namespace: joltcan
 
 name: opconnect
 
-version: 1.0.2
+version: "1.0.4"
 
 readme: README.md
 
@@ -24,6 +24,6 @@ documentation: https://github.com/joltcan/ansible-opconnect-collection
 
 homepage: https://github.com/joltcan/ansible-opconnect-collection
 
-issues: https://github.com/joltcan/ansible-opconnect-collection/blob/main/
+issues: https://github.com/joltcan/ansible-opconnect-collection/issues
 
 build_ignore: ['scripts', '.venv', 'tests', 'dist']
