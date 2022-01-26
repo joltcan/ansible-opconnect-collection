@@ -7,7 +7,7 @@
 DOCUMENTATION = """
     lookup: opconnect
     author: Fredrik Lundhag (@joltcan)
-    version_added: "2.11"
+    version_added: "1.0" # for collections, use the collection version, not the Ansible version
     short_description: retreive information from vault(s) in 1Password via 1Password connect
     description: |
         Retreive information from vaults in 1Password via 1Password Connect (opconnect). An opconnect instance is needed,
