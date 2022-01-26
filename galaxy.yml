@@ -26,5 +26,4 @@ homepage: https://github.com/joltcan/ansible-opconnect-collection
 
 issues: https://github.com/joltcan/ansible-opconnect-collection/blob/main/
 
-build_ignore: ['scripts', '.venv', 'tests']
-
+build_ignore: ['scripts', '.venv', 'tests', 'dist']
