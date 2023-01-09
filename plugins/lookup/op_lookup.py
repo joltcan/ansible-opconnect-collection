@@ -4,9 +4,9 @@
 # GNU General Public License v3.0+ (see https://www.gnu.org/licenses/gpl-3.0.txt)
 
 DOCUMENTATION = """
-    lookup: opconnect
+    lookup: op_lookup
     author: Fredrik Lundhag (@joltcan)
-    version_added: "1.0" # for collections, use the collection version, not the Ansible version
+    version_added: "1.1" # for collections, use the collection version, not the Ansible version
     short_description: retreive information from vault(s) in 1Password via 1Password connect
     description: |
         Retreive information from vaults in 1Password via 1Password Connect (opconnect). An opconnect instance is needed,
@@ -24,37 +24,37 @@ DOCUMENTATION = """
       field:
         description: field to search for. Needed when section is used
         required: False
-      op_connect_host:
+      op_connect_host_api:
         description: REST API endpoint for 1Password Connect
         env:
-          - name: OP_CONNECT_HOST
+          - name: OP_CONNECT_HOST_API
         ini:
           - section: op_connect
-            key: op_connect_host
+            key: op_connect_host_api
         required: True
         type: string
-      op_connect_token:
+      op_connect_token_api:
         description: API token for 1Password Connect access
         env:
-          - name: OP_CONNECT_TOKEN
+          - name: OP_CONNECT_TOKEN_API
         ini:
           - section: op_connect
-            key: op_connect_token
+            key: op_connect_token_api
         required: True
         type: string
-      op_connect_skip_verify:
+      op_connect_skip_verify_api:
         description: Skip TLS host verification
         env:
-          - name: OP_CONNECT_SKIP_VERIFY
+          - name: OP_CONNECT_SKIP_VERIFY_API
         ini:
           - section: op_connect
-            key: op_connect_skip_verify
+            key: op_connect_skip_verify_api
         type: boolean
         required: False
-      op_connect_ca_bundle:
+      op_connect_ca_bundle_api:
         description: Custom CA bundle for self signed certificates
         env:
-          - name: OP_CONNECT_CA_BUNDLE
+          - name: OP_CONNECT_CA_BUNDLE_API
         ini:
           - section: op_connect
             key: op_connect_ca_bundle
@@ -95,10 +95,10 @@ class LookupModule(LookupBase):
 
         display.vvvv(u"1Password Connect lookup initial terms is %s" % (terms))
         # populate our options
-        server = self.get_option('op_connect_host')
-        token = self.get_option('op_connect_token')
-        skipverify = self.get_option('op_connect_skip_verify')
-        cabundle = self.get_option('op_connect_ca_bundle')
+        server = self.get_option('op_connect_host_api')
+        token = self.get_option('op_connect_token_api')
+        skipverify = self.get_option('op_connect_skip_verify_api')
+        cabundle = self.get_option('op_connect_ca_bundle_api')
 
         # verify that we have a proper token, and get a list of vaults since we need them
         # in the next step anyway
@@ -179,13 +179,16 @@ class LookupModule(LookupBase):
             raise AnsibleError('ERROR: Can not reach "%s": error: %s' % (server, to_native(e)))
 
         data = json.loads(response.content)
+        display.vvvv(u"%s" % data)
         if not response.ok:
             raise AnsibleError('Failed to communicate with opconnect: %s' % data['message'])
 
         # iterate and find the item uuid
         itemvalue = False
 
+        display.vvvvv(u"Looping section: %s" % section)
         for item in data['fields']:
+            display.vvvvv(u"Loop item: %s" % item)
             if section is not None and "section" in item:
                 if item['section']['label'] == section and item['label'] == field:
                     itemvalue = item['value']
