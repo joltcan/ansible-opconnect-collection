@@ -186,25 +186,30 @@ class LookupModule(LookupBase):
         # iterate and find the item uuid
         itemvalue = False
 
-        display.vvvvv(u"Looping section: %s" % section)
+        display.vvvvv(u"Looping fields:")
+        display.vvvvv(u"Item: %s" % itemname)
+        display.vvvvv(u"Field: %s" % field)
+        display.vvvvv(u"Section: %s" % section)
+
         for item in data['fields']:
             display.vvvvv(u"Loop item: %s" % item)
-            if section is not None and "section" in item:
+            if section and "section" in item:
                 if item['section']['label'] == section and item['label'] == field:
                     itemvalue = item['value']
-            else:
+            elif section is None:
                 # ignore section if we aren't looking for it
                 if "section" in item:
                     continue
 
                 # try to get a field without section
-                if field is not None:
+                if field:
+                    display.vvvvv(u"Field is set to: %s" % field)
                     if item['label'] == field:
                         itemvalue = item['value']
 
                 # if no field or section, just get the password by default
                 # as the onepassword plugin does
-                else:
+                elif field is None:
                     if item['id'] == "password" and item['label'] == "password":
                         itemvalue = item['value']
 
