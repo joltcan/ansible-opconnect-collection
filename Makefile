@@ -24,7 +24,7 @@ build: clean	## Build collection artifact
 	ansible-galaxy collection build --output-path dist/
 
 publish:
-	@ansible-galaxy collection publish dist/$(namespace)-$(name)-$(curVersion).tar.gz
+	@ansible-galaxy collection publish --token=${ANSIBLE_GALAXY_TOKEN} dist/$(namespace)-$(name)-$(curVersion).tar.gz
 
 clean:	## Removes dist/ directory
 	@rm -rf ./dist
