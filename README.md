@@ -58,9 +58,9 @@ Environment variables are ignored if the module variable is defined for a task.
   collections:
     - joltcan.op.connect
   tasks:
-    - set_fact: foo_password="{{ lookup('joltcan.op.op_lookup', 'item', vault='OPS', section='creds', field='api_key') }}"
+    - set_fact: foo_password="{{ lookup('joltcan.op.lookup', 'item', vault='OPS', section='creds', field='api_key') }}"
     - debug: msg="var is {{ foo_password }} "
-    - debug: msg="{{ lookup('joltcan.op.op_lookup', 'item', vault='OPS') }}" # will return the password value of the item.
+    - debug: msg="{{ lookup('joltcan.op.lookup', 'item', vault='OPS') }}" # will return the password value of the item.
 
 ```
 <details>
