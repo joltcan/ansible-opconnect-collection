@@ -23,10 +23,10 @@ This collection has been tested against the following Ansible versions:
 
 ## Installation
 
-You can install the Ansible collection from [Ansible Galaxy](https://galaxy.ansible.com/joltcan/opconnect):
+You can install the Ansible collection from [Ansible Galaxy](https://galaxy.ansible.com/joltcan/op):
 
 ```
-ansible-galaxy collection install joltcan.opconnect
+ansible-galaxy collection install joltcan.op
 ```
 
 ## Plugin Variables
@@ -37,13 +37,13 @@ Environment variables are ignored if the module variable is defined for a task.
 
 | Plugin Variable | Environment Variable | Description                                                                           |
 |----------------:|----------------------|---------------------------------------------------------------------------------------|
-|        `op_connect_host` | `OP_CONNECT_HOST`         | URL of a 1Password Connect API Server                                   |
-|       `op_connect_token` | `OP_CONNECT_TOKEN`        | JWT used to authenticate 1Password Connect API requests                 |
-|   `op_connect_ca_bundle` | `OP_CONNECT_CA_BUNDLE`    | (Optional) Use CA bundle file for self-signed server certificate        |
-| `op_connect_skip_verify` | `OP_CONNECT_SKIP_VERIFY ` | (Optional) Skip certificate verification                                |
+|        `op_connect_host_api` | `OP_CONNECT_HOST_API`         | URL of a 1Password Connect API Server                                   |
+|       `op_connect_token_api` | `OP_CONNECT_TOKEN_API`        | JWT used to authenticate 1Password Connect API requests                 |
+|   `op_connect_ca_bundle_api` | `OP_CONNECT_CA_BUNDLE_API`    | (Optional) Use CA bundle file for self-signed server certificate        |
+| `op_connect_skip_verify_api` | `OP_CONNECT_SKIP_VERIFY_API` | (Optional) Skip certificate verification                                |
 
 
-## `joltcan.opconnect` plugin
+## `joltcan.op.connect` plugin
 
 
 ### Example Usage
@@ -53,25 +53,25 @@ Environment variables are ignored if the module variable is defined for a task.
 - name: Lookup a password
   hosts: localhost
   environment:
-    OP_CONNECT_HOST: http://localhost:8001
-    OP_CONNECT_TOKEN: "api.jwt.here"
+    OP_CONNECT_HOST_API: http://localhost:8001
+    OP_CONNECT_TOKEN_API: "api.jwt.here"
   collections:
-    - joltcan.opconnect
+    - joltcan.op.connect
   tasks:
-    - set_fact: foo_password="{{ lookup('opconnect', 'item', vault='OPS', section='creds', field='api_key') }}"
+    - set_fact: foo_password="{{ lookup('joltcan.op.op_lookup', 'item', vault='OPS', section='creds', field='api_key') }}"
     - debug: msg="var is {{ foo_password }} "
-    - debug: msg="{{ lookup('opconnect', 'item', vault='OPS') }}" # will return the password value of the item.
+    - debug: msg="{{ lookup('joltcan.op.op_lookup', 'item', vault='OPS') }}" # will return the password value of the item.
 
 ```
 <details>
-<summary>View output registered to the `opconnect`</summary>
+<summary>View output registered to the `joltcan.op.op_lookup`</summary>
 <br>
 
 ```
-op: [localhost] => {
+ok: [localhost] => {
     msg: "var is apikey"
 }
-op: [localhost] => {
+ok: [localhost] => {
     msg: "somepassword"
 }
 
@@ -85,4 +85,3 @@ op: [localhost] => {
 ## About 1Password
 
 [**1Password**](https://1password.com) is a privacy-focused password manager that keeps you safe online.
-
