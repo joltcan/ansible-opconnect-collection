@@ -107,12 +107,16 @@ class LookupModule(LookupBase):
         except Exception as e:
             raise AnsibleError('ERROR: "%s": exception: %s' % (server, to_native(e)))
 
+        display.vvvvv(u"Trying to find vault : %s" % self.get_option('vault'))
+        vaultuuid = None
+
         # find the vault we need
         for _vault in vaults:
-            if _vault['name'].lower() == self.get_option('vault').lower():
+            display.vvvvv(u"Loop item: %s" % _vault['name'])
+            if _vault['name'].strip().lower() == self.get_option('vault').strip().lower():
                 vaultuuid = _vault['id']
         if not vaultuuid:
-            raise AnsibleError('ERROR: Vault uuid not found')
+            raise AnsibleError('ERROR: Vault not found, verify that the 1Password Connect token has access.')
 
         # convert or options to vars
         itemname = terms[0]
